@@ -1,22 +1,41 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import Home from "./pages/home.page";
+import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { CookiesProvider } from "react-cookie";
+import { Provider } from "react-redux";
 
+import App from "./App";
 import "./index.scss";
+import reportWebVitals from "./reportWebVitals";
+
+import { store } from "./redux/store/store";
+
+const queryClient = new QueryClient({
+  // defaultOptions: {
+  //   queries: {
+  //     refetchOnWindowFocus: false,
+  //     refetchOnMount: true,
+  //     refetchOnReconnect: false,
+  //     retry: false,
+  //   },
+  // },
+});
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-        </Route>
-      </Routes>
+      <CookiesProvider>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </QueryClientProvider>
+      </CookiesProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

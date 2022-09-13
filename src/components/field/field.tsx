@@ -12,7 +12,7 @@ const Label = styled.label`
 `;
 
 const ErrorContainer = styled.div<{ errorBoxHeight: string | undefined }>`
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   color: #e84d1f;
   text-align: center;
   max-width: 20rem;
@@ -74,7 +74,7 @@ const FieldW: FC<FieldProps> = ({
         `}
       />
       <ErrorContainer errorBoxHeight={errorBoxHeight}>
-        {errorVal && touchedVal && <span>{errorVal}</span>}
+        {errorVal  && <span>{errorVal}</span>}
         {extraError && <span>{extraError}</span>}
       </ErrorContainer>
     </>

@@ -9,6 +9,10 @@ const Container = styled.div`
   height: 100%;
   background-color: #fff;
   opacity: 0.87;
+
+  @media only screen and (max-width: 76.8rem) {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`
@@ -16,6 +20,10 @@ const Title = styled.h1`
   color: var(--primary-color);
   font-weight: 100;
   font-family: pacifico;
+
+  @media only screen and (max-width: 60.4rem) {
+    font-size: 5.5rem;
+  }
 `;
 
 const LoginContainer = () => {
