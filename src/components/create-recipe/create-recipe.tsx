@@ -4,6 +4,7 @@ import { FC } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { notifyInfo, notifySuccess } from "../../notify/notify";
 import { setRecipeList } from "../../redux/store/slices/recipe/recipe.slice";
 import { RootState } from "../../redux/store/store";
 import { httpCreateARecipe } from "../../request/auth.request";
@@ -25,16 +26,16 @@ const Container = styled.div`
   margin: 0 auto;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  height: 50%;
+  height: 70%;
   width: 25%;
   padding: 5rem;
   row-gap: 3.5rem;
   @media only screen and (max-width: 76.8rem) {
-    width: 65%;
+    width: 50%;
   }
 
   @media only screen and (max-width: 60.4rem) {
-    width: 100%;
+    width: 80%;
   }
 `;
 
@@ -91,17 +92,16 @@ const CreateRecipe: FC<Props> = ({ onShowRecipe }) => {
               _id: user._id,
             },
           };
-          httpCreateARecipe(cookies.auth?.token, recipe).then((response) => {
-            console.log(
-              "🚀 ~ file: create-recipe.tsx ~ line 86 ~ httpCreateARecipe ~ response",
-              response
-            );
+          httpCreateARecipe(cookies.auth?.token, recipe)
+            .then((response) => {
+              const newRecipe: Recipe = { ...(response.data as Recipe), user };
 
-            const newRecipe: Recipe = { ...(response.data as Recipe), user };
-
-            dispatch(setRecipeList({ recipeList: [...recipes, newRecipe] }));
-            onShowRecipe();
-          });
+              dispatch(setRecipeList({ recipeList: [...recipes, newRecipe] }));
+              onShowRecipe();
+            })
+            .then(() => {
+              notifySuccess(`Recipe has been created`);
+            });
         }}
       >
         {({ errors, touched, handleChange }) => {

@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useToggle from "../../hooks/toggle.hooks";
+import { notifyErr, notifyInfo, notifySuccess } from "../../notify/notify";
 import { setUser } from "../../redux/store/slices/user/user.slice";
 
 import { httpLogin, httpRegister } from "../../request/auth.request";
@@ -68,6 +69,7 @@ const SignIn = () => {
 
       dispatch(setUser(user));
       navigation("/home");
+      notifyInfo(`Welcome back! ${username}`);
     } catch (err) {
       setErrorMsg((err as any)?.response?.data?.error);
     }
@@ -81,6 +83,7 @@ const SignIn = () => {
           const { username, password } = values;
           if (registerToggle) {
             await registerUser(username, password);
+            notifySuccess(`User ${username} have been created`);
             setRegisterToggle();
           } else {
             await loginUser(username, password);

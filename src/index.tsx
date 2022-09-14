@@ -11,16 +11,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import { store } from "./redux/store/store";
 
-const queryClient = new QueryClient({
-  // defaultOptions: {
-  //   queries: {
-  //     refetchOnWindowFocus: false,
-  //     refetchOnMount: true,
-  //     refetchOnReconnect: false,
-  //     retry: false,
-  //   },
-  // },
-});
+const queryClient = new QueryClient({});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

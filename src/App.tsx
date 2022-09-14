@@ -3,6 +3,9 @@ import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./app.styles.scss";
 import Auth from "./pages/auth.page";
 import Home from "./pages/home.page";
@@ -19,7 +22,7 @@ function App() {
   const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if(cookies.auth?.token){
+    if (cookies.auth?.token) {
       httpUser(cookies.auth?.token).then((data) => {
         const user: User = Object.assign({}, { ...data.data });
         dispatch(setUser(user));
@@ -29,15 +32,10 @@ function App() {
 
   return (
     <div className="app__container">
+      <ToastContainer />
       <Routes>
-        <Route
-          index
-          element={!user._id ? <Auth /> : <NotAuthorized />}
-        />
-        <Route
-          path="/home"
-          element={user._id ? <Home /> : <NotAuthorized />}
-        />
+        <Route index element={!user._id ? <Auth /> : <NotAuthorized />} />
+        <Route path="/home" element={user._id ? <Home /> : <NotAuthorized />} />
       </Routes>
     </div>
   );
